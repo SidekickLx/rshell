@@ -9,7 +9,7 @@ class Parsing{
     public:
         Parsing(string );
 	void readCommands();
-	int getCommandArray(int, string);
+	int getCommandArray(int, char*);
 	int getParameter(int, int, char* );
 	char** getParameters(int );
 	string getConnectorArray(int);

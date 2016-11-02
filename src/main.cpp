@@ -15,7 +15,7 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 //	int status = 0;
-	string cmd;
+	char cmd[32];
 	while(TRUE) {
 		string line;
 		getline(cin,line);
@@ -31,15 +31,18 @@ int main(int argc, char* argv[]){
 			}while(p->getConnectorArray(i).empty());
 		}
 */
-		for(int i = 0; p->getCommandArray(i, cmd)!=0; i++){
-			char** argv;
-			argv = (char**)malloc(sizeof(char *)*(1024+2));
-			for(int j = 0 ; p->getParameter(i,j,argv[j])!=0; j++) {
-				//argv[j] = p->getParameter(i,j);
-				cout<<argv[j]<<endl;
-			}		
-			execvp(cmd.c_str(), argv);
-			cout<<"end"<<endl;
+		for(int i = 0; p->getCommandArray(i, cmd); i++){
+			char* argv[1024];
+			char buffer[32];
+
+			//argv = (char**)malloc(sizeof(char *)*(1024+2));
+			for(int j = 0; p->getParameter(i,j,buffer); j++) {
+				argv[j] = buffer;
+
+			}
+			cout<<"cmd:"<<cmd<<endl;
+			cout<<"argv"<<argv[0]<<argv[1]<<endl;		
+			execvp(cmd, argv);
 		}
 			
 	}
