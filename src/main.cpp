@@ -49,18 +49,24 @@ int main(int argc, char* argv[]){
 		getline(cin,line);
 		Parsing* p = new Parsing(line);  
 		p->readCommands();
-		p->getCommandArray(0, cmd);
-		if(!(strcmp(cmd, "exit"))) exit(0);
+		//p->getCommandArray(0, cmd);
+		//if(!(strcmp(cmd, "exit"))) exit(0);
 		for(int i = 0; p->getCommandArray(i, cmd); i++){
 			for(int j = 0; p->getParameter(i,j,buffer); j++)
 				parameter[j] = buffer;
-			if(fork()!=0){
+			Built_in* b = new Built_in(cmd,parameter);
+	
+			if(!(strcmp(cmd, "exit"))) exit(0);
+			else if(!(strcmp(cmd, "cd"))){
+				b->cd();
+			}else if(fork()!=0){
 				waitpid(-1,&status,0);
 			} else {	
 				rslt = execvp(cmd, parameter);
 				perror("execvp failed"); 
 				exit(0);
 			}
+			free(b);
 			if(p->getConnectorArray(i,connector)){
 				if(!strcmp(connector,";")) continue;
 				else if((!strcmp(connector,"&&"))&&(rslt==0)) continue;
