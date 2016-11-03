@@ -71,6 +71,13 @@ char** Parsing::getParameters(int i){
 }
 
 
-string Parsing::getConnectorArray(int i){
-	return this->connector[i];
+int Parsing::getConnectorArray(int i, char* con){
+	if(this->connector[i].empty()){
+		return 0;
+	}else{
+		int len = connector[i].length();
+		int con_size = (connector[i]).copy(con,len,0);
+		con[con_size] = '\0';
+		return 1;
+	}
 }

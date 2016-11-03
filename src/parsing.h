@@ -12,7 +12,7 @@ class Parsing{
 	int getCommandArray(int, char*);
 	int getParameter(int, int, char* );
 	char** getParameters(int );
-	string getConnectorArray(int);
+	int getConnectorArray(int, char*);
 	~Parsing(){free(command);free(parameter);free(connector);};
     private:
 	string line;
