@@ -1,7 +1,6 @@
 # Rshell
 By Weijia Xin & Xuezixiang Li
 
-[TOC]
 
 
 
@@ -22,6 +21,7 @@ $ bin/rshell
 `$ executable [ argumentList ] [ connector cmd ]`
 
 - executing multiple commands with logical symbols
+
 The connector is an optional way you can run multiple commands at once. If a command is followed by ; , then the next command is always executed; if a command is followed by &&, then the next command is executed only if the first one succeeds; if a command is followed by ||, then the next command is executed only if the first one fails. 
 For example:
 ```bash
