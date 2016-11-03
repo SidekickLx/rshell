@@ -50,7 +50,6 @@ int Parsing::getCommandArray(int i, char* str){
 		length = this->command[i].length();
 		str_len = this->command[i].copy(str, length, 0);
 		str[str_len] = '\0';
-		cout<< str <<endl;
 		return 1;
 	}
 }
@@ -68,7 +67,6 @@ int Parsing::getParameter(int i, int j, char* argv){
 char** Parsing::getParameters(int i){
 	for(int j=0 ; !(parameter[i][j].empty()); j++)
 		parameter[i][j].copy(this->para_of_one_cmd[j],parameter[i][j].length(),0);
-	cout<<para_of_one_cmd[0]<<endl;
 	return para_of_one_cmd;
 }
 
