@@ -31,3 +31,23 @@ $ mkdir test
 	# is equivalent to:
 $ ls -a; echo hello; mkdir test
 ```
+### Build-in function
+#### cd
+The usage of cd is the same as another shells. The symbol "~" means user's main directory.
+`cd ~/project`
+More over the if the 2nd parameter is blank, it should back to the up level.
+#### test
+This function was built to check whether a file or directory exist.
+The usage of test function has been shown bellow.
+```bash
+$test [-option] [dir_path or file_path]
+#[options]
+#	-e checks if the file/directory exists
+#	-f checks if the file/directory exists and is a regular file
+#	-d checks if the file/directory exists and is a directory
+```
+If a user does not specify a flag, then the -e functionality will be used by default.
+If the command test -e /test/file/path evaluates to True, then rshell will print display the following.
+(True)
+And likewise, if the above command evaluates to False, then rshell will print False in the same manner.
+(False)
