@@ -10,6 +10,7 @@ Built_in::Built_in(char* command, char** parameters){
 
 int Built_in::cd(){
 	char* cd_path = NULL;
+	char* main_path = getenv("HOME");
 	if(parameters[1] == NULL){
 		parameters[1] = (char*)malloc(3 * sizeof(char));
            	parameters[1][0]= '.';
@@ -17,17 +18,53 @@ int Built_in::cd(){
 		parameters[1][2]= '\0';
 	}
 	if(parameters[1][0] == '~'){
-		cd_path = (char*)malloc(strlen(pwd->pw_dir)+strlen(parameters[1]));
+		cd_path = (char*)malloc(strlen(main_path)+strlen(parameters[1]));
 		if(cd_path==NULL) return -1;
-		strcpy(cd_path,pwd->pw_dir);
-		strncpy(cd_path+strlen(pwd->pw_dir),parameters[1]+1,strlen(parameters[1]));
+		strcpy(cd_path,main_path);
+		strncpy(cd_path+strlen(main_path),parameters[1]+1,strlen(parameters[1]));
 	}else{
 		cd_path =(char*) malloc(strlen(parameters[1]+1));
-            	if(cd_path == NULL) return -1;
+           if(cd_path == NULL) return -1;
 		strcpy(cd_path,parameters[1]);
 
 	}
 	chdir(cd_path);
 	free(cd_path);
+
+	return 0;
+}
+
+int Built_in::test(){
+	char* path = NULL;
+	char* main_path = getenv("HOME");
+	char* option = parameters[1];
+	if(parameters[2][0] == '~'){
+		path = (char*)malloc(strlen(main_path)+strlen(parameters[2]));
+		if(path==NULL) return -1;
+		strcpy(path,main_path);
+		strncpy(path+strlen(main_path),parameters[2]+1,strlen(parameters[2]));
+	}else{
+		path =(char*) malloc(strlen(parameters[2]+1));
+           if(path == NULL) return -1;
+		strcpy(path,parameters[2]);
+
+	}
+	if(access(path, F_OK) == 0){
+		if(!(strcmp(option,"-e"))){
+			cout<<"True"<<endl;
+		}else if(!(strcmp(option,"-d"))){
+			if(opendir(path) == NULL)
+				cout<<"False"<<endl;
+			else
+				cout<<"True"<<endl;
+		}else if(!(strcmp(option,"-f"))){
+			if(opendir(path) == NULL)
+				cout<<"True"<<endl;
+			else
+				cout<<"False"<<endl;
+		}		
+	}else{
+		cout<<"False"<<endl;
+	}
 	return 0;
 }

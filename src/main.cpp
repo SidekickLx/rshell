@@ -38,27 +38,28 @@ int main(int argc, char* argv[]){
 	int status = 0;
 	char prompt[128];
 	char cmd[32];
-	char* parameter[1024];
 	char connector[10];
-	char buffer[32];
 	while(TRUE) {
 		int rslt = 0;
+		char* parameter[1024];
+		char buffer[32];
 		string line;
 		getprompt(prompt);
 		cout<<prompt<<">>";
 		getline(cin,line);
 		Parsing* p = new Parsing(line);  
 		p->readCommands();
-		//p->getCommandArray(0, cmd);
-		//if(!(strcmp(cmd, "exit"))) exit(0);
 		for(int i = 0; p->getCommandArray(i, cmd); i++){
-			for(int j = 0; p->getParameter(i,j,buffer); j++)
-				parameter[j] = buffer;
+			for(int j = 0; p->getParameter(i,j,buffer); j++){
+				parameter[j] = (char*)malloc(1024*sizeof(char));
+				strcpy(parameter[j],buffer);
+			}
 			Built_in* b = new Built_in(cmd,parameter);
-	
 			if(!(strcmp(cmd, "exit"))) exit(0);
 			else if(!(strcmp(cmd, "cd"))){
 				b->cd();
+			}else if(!(strcmp(cmd,"test"))){
+				b->test();
 			}else if(fork()!=0){
 				waitpid(-1,&status,0);
 			} else {	

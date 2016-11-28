@@ -10,74 +10,76 @@ void Parsing::readCommands(){
 	vector<string>temp;
 	stringstream ss(line);
 	string str;
-	int l,m,n = 0;
+	char* c = new char[32];
+	int l=0,m=0,n = 0;
 	while(ss>>str){
 		temp.push_back(str);
 	}
 	for(unsigned int j = 0; j<temp.size(); j++){
+		strcpy(c,temp[j].c_str());
 		if (j == 0) {
-			this->command[l] = temp[j];
-			parameter[l][n] = temp[j];
+			command[l] = (char*)malloc(sizeof(c));
+			parameter[l][n] = (char*)malloc(sizeof(c));
+			strcpy(command[l], c);
+			strcpy(parameter[l][n], c);
 			n++;	
 			l++; 
 			continue;
 
 		}
-		if ((temp[j] == ";") || (temp[j] == "&&") || (temp[j] == "||")) {
-			connector[m] = temp[j];	
+		if ((!strcmp(c, ";")) || (!strcmp(c, "&&")) ||(!strcmp(c, "||"))) {
+			connector[m] = (char*)malloc(sizeof(c));
+			strcpy(connector[m], c);	
 			m++;	
 			n = 0;
 			continue;
 	
 		}
-		if ((temp[j-1] == ";") || (temp[j-1] == "&&") || (temp[j-1] == "||")) {
-			command[l] = temp[j];
-			parameter[l][n]=temp[j];
+		if ((temp[j-1] == ";") || (temp[j-1] == "&&") || (temp[j-1] == "||")){
+			command[l] = (char*)malloc(sizeof(c));
+			parameter[l][n] = (char*)malloc(sizeof(c));
+			strcpy(command[l], c);
+			strcpy(parameter[l][n], c);
 			n++;	
 			l++; 
 			continue;
 		}
-			parameter[l-1][n]=temp[j];
-			n++;	
-	}
 
+		parameter[l-1][n] = (char*)malloc(sizeof(c));
+		strcpy(parameter[l-1][n],c);
+		n++;	
+
+	}
 }
 
 int Parsing::getCommandArray(int i, char* str){
-	int length, str_len = 0;
-	if(command[i].empty())	return 0;
+	if(!command[i])	return 0;
 	else{
-		length = this->command[i].length();
-		str_len = this->command[i].copy(str, length, 0);
-		str[str_len] = '\0';
+		strcpy(str,command[i]);
 		return 1;
 	}
 }
 int Parsing::getParameter(int i, int j, char* argv){
-	if(parameter[i][j].empty()) {
+	if(!parameter[i][j]) {
 		return 0;
 	}else{
-		int len = parameter[i][j].length();
-		int argv_size = (parameter[i][j]).copy(argv,len,0);
-		argv[argv_size] = '\0';
+		strcpy(argv,parameter[i][j]);
 		return 1;
 	}
 }
 
 char** Parsing::getParameters(int i){
-	for(int j=0 ; !(parameter[i][j].empty()); j++)
-		parameter[i][j].copy(this->para_of_one_cmd[j],parameter[i][j].length(),0);
+	for(int j=0 ; !(parameter[i][j]); j++)
+		strcpy(para_of_one_cmd[j],parameter[i][j]);
 	return para_of_one_cmd;
 }
 
 
 int Parsing::getConnectorArray(int i, char* con){
-	if(this->connector[i].empty()){
+	if(!this->connector[i]){
 		return 0;
 	}else{
-		int len = connector[i].length();
-		int con_size = (connector[i]).copy(con,len,0);
-		con[con_size] = '\0';
+		strcpy(con,connector[i]);
 		return 1;
 	}
 }

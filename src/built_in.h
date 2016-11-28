@@ -8,11 +8,13 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <dirent.h>
 using namespace std;
 class Built_in {
     public:
         Built_in(char*, char**);
         int cd();
+        int test();
         int about(){};
     private:
 	struct passwd *pwd;
