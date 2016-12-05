@@ -12,12 +12,15 @@ int Built_in::cd(){
 	char* cd_path = NULL;
 	char* main_path = getenv("HOME");
 	if(parameters[1] == NULL){
+		cd_path = (char*)malloc(2*strlen(main_path));
+		if(cd_path==NULL) return -1;
+		strcpy(cd_path,main_path);
+	}else if(!strcmp(parameters[1], "-")){
 		parameters[1] = (char*)malloc(3 * sizeof(char));
            	parameters[1][0]= '.';
             	parameters[1][1]= '.';
 		parameters[1][2]= '\0';
-	}
-	if(parameters[1][0] == '~'){
+	}else if(parameters[1][0] == '~'){
 		cd_path = (char*)malloc(strlen(main_path)+strlen(parameters[1]));
 		if(cd_path==NULL) return -1;
 		strcpy(cd_path,main_path);
@@ -26,11 +29,9 @@ int Built_in::cd(){
 		cd_path =(char*) malloc(strlen(parameters[1]+1));
            if(cd_path == NULL) return -1;
 		strcpy(cd_path,parameters[1]);
-
 	}
 	chdir(cd_path);
 	free(cd_path);
-
 	return 0;
 }
 
