@@ -57,11 +57,11 @@ int main(int argc, char* argv[]){
 			Built_in* b = new Built_in(cmd,parameter);
 			if(!(strcmp(cmd, "exit"))) exit(0);
 			else if(!(strcmp(cmd, "cd"))){
-				b->cd();
+				rslt = b->cd();
 			}else if(!(strcmp(cmd,"test"))){
-				b->test();
+				rslt = b->test();
 			}else if(!(strcmp(cmd,"["))){
-				b->test();
+				rslt = b->test();
 			}else if(fork()!=0){
 				waitpid(-1,&status,0);
 			} else {	
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]){
 				if(!strcmp(connector,";")) continue;
 				else if((!strcmp(connector,"&&"))&&(rslt==0)) continue;
 				else if((!strcmp(connector,"||"))&&(rslt==-1)) continue;
-				else break;
+				else i++;
 			}else{
 				break;
 			}
