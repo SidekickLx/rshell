@@ -60,6 +60,8 @@ int main(int argc, char* argv[]){
 				b->cd();
 			}else if(!(strcmp(cmd,"test"))){
 				b->test();
+			}else if(!(strcmp(cmd,"["))){
+				b->test();
 			}else if(fork()!=0){
 				waitpid(-1,&status,0);
 			} else {	

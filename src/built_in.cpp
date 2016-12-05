@@ -38,7 +38,13 @@ int Built_in::cd(){
 int Built_in::test(){
 	char* path = NULL;
 	char* main_path = getenv("HOME");
-	char* option = parameters[1];
+	char* option = (char*)malloc(sizeof(parameters[1]));
+	strcpy(option,parameters[1]);
+	if((!parameters[2])||(!strcmp(parameters[2],"]"))){
+		strcpy(option,"-e");
+		parameters[2] = (char*)malloc(sizeof(parameters[1]));
+		strcpy(parameters[2],parameters[1]);
+	}
 	if(parameters[2][0] == '~'){
 		path = (char*)malloc(strlen(main_path)+strlen(parameters[2]));
 		if(path==NULL) return -1;
